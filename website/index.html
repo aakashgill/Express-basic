@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Project</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: repeating-linear-gradient(to right, #FDE482, #FDE482 1px, transparent 1px, transparent);
+            background-size: 25px 25px;
+            background-color: #FACB0E ;
+            max-width: 350px;
+            margin: auto;
+        }
+        
+        .field {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: 600;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        input {
+            padding: 8px 10px;
+            border: 1px solid #d9dde1;
+            border-radius: 4px;
+            background-color: #f5f9fe;
+            outline:none;
+            font-size: 20px;
+            width: 100%;
+        }
+        input:focus {
+            background-color: #fff;
+            border-color: #2196f3;
+        }
+        button {
+            padding: 8px 20px;
+            width: 100%;
+            background-color: #2196f3;
+            color: #fff;
+            display: inline-block;
+            font-size: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            filter: brightness(95%);
+        }
+        ul {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        li {
+            margin-bottom: 5px;
+            font-size: 20px;
+            list-style: none;
+            background-color: #fff;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>This is an Express Application</h1>
+        <form>
+            <div class="field">
+                <label for="name">Enter Saiyan Name</label>
+                <input required type="text" name="saiyan">
+            </div>
+            <div class="field">
+                <label for="power">Enter Power Level</label>
+                <input required type="text" name="power">
+            </div>
+            <div class="field">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        <ul id="result"></ul>
+    </div>
+
+    <script>
+
+        function showData() {
+            const resultContainer = document.querySelector('#result');
+            let result = '';
+            fetch('http://localhost:3000/all')
+                .then(response => response.json())
+                .then(data => {
+                    Object.keys(data).reverse().map(item => {
+                        result += `<li class="list-item">${item} has a power level of ${data[item]} </li>`
+                        resultContainer.innerHTML = result;
+                    });
+                });
+        }
+
+        function submitData() {
+            const form = document.getElementsByTagName('form')[0];
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                let saiyanName = document.getElementsByName('saiyan')[0].value;
+                let powerLevel = document.getElementsByName('power')[0].value;
+
+                let saiyanObj = {};
+                saiyanObj[saiyanName] = powerLevel;
+                
+                
+                fetch('http://localhost:3000/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(saiyanObj)
+                });
+                showData();
+                document.querySelector('form').reset();
+            }
+        }
+
+        showData();
+        submitData();
+    </script>
+</body>
+</html>
