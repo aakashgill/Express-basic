@@ -13,12 +13,26 @@
             background-image: repeating-linear-gradient(to right, #FDE482, #FDE482 1px, transparent 1px, transparent);
             background-size: 25px 25px;
             background-color: #FACB0E ;
-            max-width: 350px;
-            margin: auto;
         }
-        
+        h1 {
+            text-align: center;
+        }
         .field {
             margin-bottom: 20px;
+        }
+        .flex {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .flex > * {
+            width: 40%;
+            padding: 0 30px;
+        }
+        .flex > *:first-child {
+            width: 25%;
+            position: sticky;
+            top:20px;
         }
         label {
             font-weight: 600;
@@ -71,20 +85,22 @@
 <body>
     <div>
         <h1>This is an Express Application</h1>
-        <form>
-            <div class="field">
-                <label for="name">Enter Saiyan Name</label>
-                <input required type="text" name="saiyan">
-            </div>
-            <div class="field">
-                <label for="power">Enter Power Level</label>
-                <input required type="text" name="power">
-            </div>
-            <div class="field">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-        <ul id="result"></ul>
+        <div class="flex">
+            <form>
+                <div class="field">
+                    <label for="name">Enter Saiyan Name</label>
+                    <input required type="text" name="saiyan">
+                </div>
+                <div class="field">
+                    <label for="power">Enter Power Level</label>
+                    <input required type="text" name="power">
+                </div>
+                <div class="field">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+            <ul id="result"></ul>
+        </div>
     </div>
 
     <script>
