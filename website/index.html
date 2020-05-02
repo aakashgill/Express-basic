@@ -92,7 +92,7 @@
         function showData() {
             const resultContainer = document.querySelector('#result');
             let result = '';
-            fetch('http://localhost:3000/all')
+            fetch('all')
                 .then(response => response.json())
                 .then(data => {
                     Object.keys(data).reverse().map(item => {
@@ -113,7 +113,7 @@
                 saiyanObj[saiyanName] = powerLevel;
                 
                 
-                fetch('http://localhost:3000/add', {
+                fetch('add', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'
